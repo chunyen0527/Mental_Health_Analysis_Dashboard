@@ -1,0 +1,1468 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This panel displays the total number of individuals grouped by their occupation. The counts are separated into two categories: 'Employee' and 'Student,' based on the data collected. The numbers represent the sum of individuals in each occupation category.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#7bafea",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "WITH CountOcc AS (\r\n  SELECT 'Employee' AS occupation,COUNT(occupation) AS `Count of Occupation`\r\n  FROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\n  WHERE occupation = 'Employee' OR occupation = 'other'\r\n)\r\n\r\nSELECT * FROM CountOcc\r\nUNION ALL\r\nSELECT \r\n  occupation,\r\n  COUNT(occupation) AS `Count of Occupation`\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nWHERE occupation = 'Student'\r\nGROUP BY occupation",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Occupation Count ",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This chart displays a side-by-side comparison of the number of reported stress levels between students and employees across various stress frequency categories. It highlights how each group experiences stress at different frequencies, enabling targeted analysis.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 87,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Student Count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#979ad4",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Employee Count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7e58e6",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 9,
+        "x": 8,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.67,
+        "fullHighlight": false,
+        "groupWidth": 0.84,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "normal",
+        "text": {},
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  stress_frequency,\r\n  SUM(CASE WHEN occupation = 'Student' THEN frequency_count ELSE 0 END) AS `Student Count`,\r\n  SUM(CASE WHEN occupation = 'Employee' THEN frequency_count ELSE 0 END) AS `Employee Count`\r\nFROM (\r\n  SELECT \r\n    occupation,\r\n    stress_frequency,\r\n    COUNT(*) AS frequency_count\r\n  FROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\n  WHERE occupation IN ('Student', 'Employee')\r\n  GROUP BY occupation, stress_frequency\r\n)\r\nGROUP BY stress_frequency\r\nORDER BY CASE\r\n  WHEN stress_frequency = 'Never' THEN 1\r\n  WHEN stress_frequency = 'Rarely' THEN 2\r\n  WHEN stress_frequency = 'Monthly' THEN 3\r\n  WHEN stress_frequency = 'Weekly' THEN 4\r\n  WHEN stress_frequency = 'Daily' THEN 5\r\n  ELSE 6\r\nEND",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Comparison of Stress Frequency: Students vs. Employees",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This visualization shows the distribution of reported stress frequency levels for individuals who sleep between 5 and 8 hours. It highlights how different stress levels are associated with this optimal sleep range.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Daily"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#9bc2d2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weekly"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c80cd",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rarely"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b26a1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Monthly"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6b4ac8",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Never"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b15b5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 7,
+        "x": 17,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.81,
+        "fullHighlight": false,
+        "groupWidth": 1,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  '5-8 hours' AS sleep_category,\r\n  SUM(CASE WHEN stress_frequency = 'Daily' THEN 1 ELSE 0 END) AS Daily,\r\n  SUM(CASE WHEN stress_frequency = 'weekly' THEN 1 ELSE 0 END) AS Weekly,\r\n  SUM(CASE WHEN stress_frequency = 'Monthly' THEN 1 ELSE 0 END) AS Monthly,\r\n  SUM(CASE WHEN stress_frequency = 'Rarely' THEN 1 ELSE 0 END) AS Rarely,\r\n  SUM(CASE WHEN stress_frequency = 'Never' THEN 1 ELSE 0 END) AS Never\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nWHERE sleep_hours IN ('5 - 6 hours', '7 - 8 hours')\r\nGROUP BY sleep_category\r\nORDER BY sleep_category",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Stress Frequency Distribution for 5-8 Hours of Sleep",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This panel displays the distribution of individuals across different age groups. Each gauge represents the count of individuals in a specific age range.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#979ad4",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 3,
+        "x": 0,
+        "y": 3
+      },
+      "id": 12,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "limit": 5,
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT age_range, COUNT(*) AS count\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nGROUP BY age_range\r\n\r\nUNION ALL\r\n\r\nSELECT 'Zero' AS age_range, 0 AS count\r\n\r\nUNION ALL\r\n\r\nSELECT 'Two Hundred' AS age_range, 200 AS count\r\nORDER BY age_range",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Age Composition",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This chart illustrates the distribution of stress frequency reported in the survey. It helps identify which stress levels are most commonly experienced among participants. By understanding the prevalence of different stress levels, we can better assess the need for mental health resources and targeted interventions to improve overall well-being",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rarely"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#9bc2d2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Daily"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5e38b5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Never"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b15b5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "frequency_count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#979ad4",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Monthly"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7e58e6",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weekly"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#979ad4",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 3,
+        "y": 3
+      },
+      "id": 2,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^frequency_count$/",
+          "values": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "dataset": "dataset1",
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  CASE \r\n    WHEN LOWER(stress_frequency) = 'weekly' THEN 'Weekly'\r\n    ELSE stress_frequency\r\n  END AS stress_frequency,\r\n  COUNT(*) AS frequency_count\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nGROUP BY stress_frequency\r\nORDER BY frequency_count DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "mental_health_data"
+        }
+      ],
+      "title": "Count of Stress Levels",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This Tree Map visualization displays the frequency of stress symptoms reported by individuals. Each rectangle represents a specific symptom, with the size of the rectangle corresponding to the frequency of its occurrence. This allows for a clear comparison of which symptoms are most commonly experienced, providing insights into stress patterns.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#979ad4",
+                "value": 0
+              },
+              {
+                "color": "#7e58e6",
+                "value": 250
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 11,
+        "x": 3,
+        "y": 10
+      },
+      "id": 8,
+      "options": {
+        "tiling": "treemapSquarify"
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "WITH SplitSymptoms AS (\r\n    SELECT\r\n        word, COUNT(*) AS frequency\r\n    FROM (\r\n        SELECT SPLIT(stress_symptoms, ';') AS words\r\n        FROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\n    ), UNNEST(words) AS word\r\n    WHERE word != ''\r\n    GROUP BY word\r\n)\r\nSELECT *\r\nFROM SplitSymptoms\r\nWHERE frequency > 1;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Stress Symptoms Word Count",
+      "type": "marcusolsson-treemap-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This bar chart compares the distribution of productivity ratings across individuals with and without access to mental health resources. Each productivity rating (1 to 5) is displayed along the x-axis, with the bars representing the count of individuals who reported either 'True' (having resources) or 'False' (lacking resources). This visualization highlights the correlation between mental health resources and perceived productivity levels.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "True"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c80cd",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "False"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b26a1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 14,
+        "y": 10
+      },
+      "id": 14,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.9,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "productivity_rating",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT productivity_rating, \r\n    COUNT(CASE WHEN performance_impact = TRUE THEN 1 ELSE NULL END) AS `True`,\r\n    COUNT(CASE WHEN performance_impact = FALSE THEN 1 ELSE NULL END) AS `False`\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nGROUP BY productivity_rating\r\nORDER BY productivity_rating",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Productivity Ratings by Resource Availability",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This visualization displays the average productivity ratings segmented by age group and mental health rating. By comparing different mental health ratings such as 'Very Poor', 'Average', 'Excellent', and 'Great and Happy about it', we can observe how productivity varies within each age range. This insight helps identify age groups and mental health conditions that may benefit from targeted support to improve productivity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Very Poor"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#9bc2d2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Excellent"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6b4ac8",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c80cd",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Great"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b26a1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 4,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.94,
+        "fullHighlight": false,
+        "groupWidth": 0.9,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "always",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  age_range,\r\n  AVG(CASE WHEN mental_health_rating = 'Very Poor' THEN productivity_rating ELSE NULL END) AS `Very Poor`,\r\n  AVG(CASE WHEN mental_health_rating = 'Average' THEN productivity_rating ELSE NULL END) AS Average,\r\n  AVG(CASE WHEN mental_health_rating = 'Excellent' THEN productivity_rating ELSE NULL END) AS Excellent,\r\n  AVG(CASE WHEN mental_health_rating = 'Great' OR mental_health_rating = 'Great and Happy about it' THEN productivity_rating ELSE NULL END) AS Great\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nGROUP BY age_range\r\nORDER BY age_range",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average Productivity by Mental Health Rating Across Age Groups",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This bar chart illustrates the distribution of stress frequency among different age groups. Each stress frequency category (Daily, Monthly, Rarely, Weekly, Never) is displayed along the x-axis, highlighting the correlation between stress levels and age groups.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Very Poor"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#9bc2d2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c80cd",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Excellent"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6b4ac8",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Great"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b26a1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 13,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.9,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  CASE\r\n    WHEN stress_frequency = 'Never' THEN 'Never'\r\n    WHEN stress_frequency = 'Rarely' THEN 'Rarely'\r\n    WHEN stress_frequency = 'Monthly' THEN 'Monthly'\r\n    WHEN stress_frequency = 'weekly' THEN 'Weekly'\r\n    WHEN stress_frequency = 'Daily' THEN 'Daily'\r\n    ELSE stress_frequency\r\n  END AS stress_frequency_label,\r\n  COUNT(CASE WHEN mental_health_rating = 'Very Poor' THEN productivity_rating ELSE NULL END) AS `Very Poor`,\r\n  COUNT(CASE WHEN mental_health_rating = 'Average' THEN productivity_rating ELSE NULL END) AS Average,\r\n  COUNT(CASE WHEN mental_health_rating = 'Excellent' THEN productivity_rating ELSE NULL END) AS Excellent,\r\n  COUNT(CASE WHEN mental_health_rating = 'Great' OR mental_health_rating = 'Great and Happy about it' THEN productivity_rating ELSE NULL END) AS Great\r\nFROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\nGROUP BY stress_frequency\r\nORDER BY CASE\r\n    WHEN stress_frequency = 'Never' THEN 1\r\n    WHEN stress_frequency = 'Rarely' THEN 2\r\n    WHEN stress_frequency = 'Monthly' THEN 3\r\n    WHEN stress_frequency = 'Weekly' THEN 4\r\n    WHEN stress_frequency = 'Daily' THEN 5\r\n    ELSE 6\r\nEND",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Stress Frequency by Age Group",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-bigquery-datasource",
+        "uid": "eetyeefuo44jkc"
+      },
+      "description": "This panel illustrates the percentage distribution of productivity ratings (1-5) across different sleep duration categories. The data is presented as percentages, allowing for a proportional comparison of productivity levels within each sleep range. This helps identify trends in how sleep duration relates to relative productivity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#9bc2d2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "2"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c80cd",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "3"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6b4ac8",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "4"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b26a1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "5"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#4b15b5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 9,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.98,
+        "fullHighlight": false,
+        "groupWidth": 0.9,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.0-16606054638",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-bigquery-datasource",
+            "uid": "eetyeefuo44jkc"
+          },
+          "editorMode": "code",
+          "format": 1,
+          "location": "US",
+          "project": "mental-health-analysis-468004",
+          "rawQuery": true,
+          "rawSql": "WITH SleepRatingCounts AS (\r\n  SELECT sleep_hours AS `Sleep Hours`,\r\n    COUNT(CASE WHEN productivity_rating = 1 THEN 1 ELSE NULL END) AS count_1,\r\n    COUNT(CASE WHEN productivity_rating = 2 THEN 1 ELSE NULL END) AS count_2,\r\n    COUNT(CASE WHEN productivity_rating = 3 THEN 1 ELSE NULL END) AS count_3,\r\n    COUNT(CASE WHEN productivity_rating = 4 THEN 1 ELSE NULL END) AS count_4,\r\n    COUNT(CASE WHEN productivity_rating = 5 THEN 1 ELSE NULL END) AS count_5\r\n  FROM `mental-health-analysis-468004.dataset1.mental_health_data`\r\n  WHERE sleep_hours = '3 - 4 hours' OR sleep_hours = '5 - 6 hours' OR sleep_hours = '7 - 8 hours'\r\n  GROUP BY sleep_hours\r\n)\r\nSELECT \r\n  `Sleep Hours`,\r\n  ROUND(count_1 * 100.0 / (count_1 + count_2 + count_3 + count_4 + count_5), 2) AS `1`,\r\n  ROUND(count_2 * 100.0 / (count_1 + count_2 + count_3 + count_4 + count_5), 2) AS `2`,\r\n  ROUND(count_3 * 100.0 / (count_1 + count_2 + count_3 + count_4 + count_5), 2) AS `3`,\r\n  ROUND(count_4 * 100.0 / (count_1 + count_2 + count_3 + count_4 + count_5), 2) AS `4`,\r\n  ROUND(count_5 * 100.0 / (count_1 + count_2 + count_3 + count_4 + count_5), 2) AS `5`\r\nFROM SleepRatingCounts\r\nORDER BY `Sleep Hours`",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Sleep Hours and Productivity Ratings (Percentage-Based)",
+      "type": "barchart"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2025-08-03T19:57:31.903Z",
+    "to": "2025-08-04T07:57:31.903Z"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Mental Health Analysis",
+  "uid": "be4agr63pi22of",
+  "version": 7
+}
